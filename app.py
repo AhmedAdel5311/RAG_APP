@@ -15,12 +15,12 @@ PERSIST_DIR = os.getenv("PERSIST_DIR")
 
 # Basic Streamlit UI
 st.set_page_config(page_title="RAG Q&A", layout="centered")
-st.title("📚 Document Q&A — minimal")
+st.title("📚 Document Q&A ")
 
 st.write("Upload documents (PDF, TXT, CSV, DOCX, XLSX). The system will build a knowledge base and answer queries. Keys & models are hidden.")
 
 # Upload area
-uploaded = st.file_uploader("Upload documents", type=["pdf","txt","csv","docx","xlsx","json"], accept_multiple_files=True)
+uploaded = st.file_uploader("Upload documents", type=["pdf","txt","csv","docx","xlsx"], accept_multiple_files=True)
 UPLOAD_DIR = "uploaded_data"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -74,8 +74,6 @@ if st.button("Ask") and query.strip():
                     answer = getattr(resp, "content", None) or getattr(resp, "text", None) or str(resp)
                     st.subheader("Answer")
                     st.write(answer)
-                    st.subheader("Retrieved chunks")
-                    for i, t in enumerate(texts, start=1):
-                        st.markdown(f"**Chunk {i}**: {t[:800]}{'...' if len(t) > 800 else ''}")
+                    
         except Exception as e:
             st.error(f"Error during query: {e}")
